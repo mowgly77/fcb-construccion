@@ -484,31 +484,102 @@ section {
 .p-md { grid-column: span 5; min-height: 340px; }
 .p-sm { grid-column: span 4; min-height: 230px; }
 
-/* ---------- Drive gallery ---------- */
-.drive-grid {
+/* ---------- Proyectos gallery ---------- */
+.proj-section-label {
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gris-linea);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amarillo);
+}
+
+.proj-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-  margin-top: 32px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
 }
 
-.drive-item {
-  position: relative;
+@media (max-width: 900px) {
+  .proj-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .proj-grid { grid-template-columns: 1fr; }
+}
+
+.proj-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
   overflow: hidden;
-  border-radius: 3px;
   background: var(--negro-3);
-  aspect-ratio: 4/3;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.25s ease, transform 0.25s ease;
 }
 
-.drive-item img {
+.proj-card:hover {
+  border-color: var(--amarillo);
+  transform: translateY(-3px);
+}
+
+.proj-card:hover .proj-thumb img {
+  transform: scale(1.05);
+}
+
+.proj-thumb {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.proj-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
   transition: transform 0.5s ease;
 }
 
-.drive-item:hover img {
-  transform: scale(1.06);
+.proj-info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.proj-cat {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amarillo);
+}
+
+.proj-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--blanco);
+}
+
+.proj-meta {
+  font-size: 12px;
+  color: var(--gris);
+  margin-top: 2px;
+}
+
+.proj-zoom-hint {
+  font-size: 11px;
+  color: var(--gris);
+  margin-top: 6px;
+  opacity: 0.7;
 }
 
 .drive-empty {
