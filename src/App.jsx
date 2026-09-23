@@ -9,6 +9,7 @@ const Home = lazy(() => import('./pages/Home.jsx'));
 const ServicioPage = lazy(() => import('./pages/ServicioPage.jsx'));
 const Proyectos = lazy(() => import('./pages/Proyectos.jsx'));
 const Contacto = lazy(() => import('./pages/Contacto.jsx'));
+const Admin = lazy(() => import('./pages/Admin.jsx'));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,25 +49,41 @@ function RevealObserver() {
   return null;
 }
 
+function SiteLayout({ children }) {
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+      <WhatsAppFloat />
+    </>
+  );
+}
+
 function AppRoutes() {
+  const { pathname } = useLocation();
+  const isAdmin = pathname === '/admin';
+
   return (
     <>
       <ScrollToTop />
-      <RevealObserver />
-      <Header />
-      <main>
-        <Suspense fallback={<div style={{ minHeight: '60vh', background: '#0D0D0D' }} />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/servicios/:slug" element={<ServicioPage />} />
-            <Route path="/proyectos" element={<Proyectos />} />
-            <Route path="/contacto" element={<Contacto />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-      <WhatsAppFloat />
+      {!isAdmin && <RevealObserver />}
+      <Suspense fallback={<div style={{ minHeight: '60vh', background: '#0D0D0D' }} />}>
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="*" element={
+            <SiteLayout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/servicios/:slug" element={<ServicioPage />} />
+                <Route path="/proyectos" element={<Proyectos />} />
+                <Route path="/contacto" element={<Contacto />} />
+                <Route path="*" element={<Home />} />
+              </Routes>
+            </SiteLayout>
+          } />
+        </Routes>
+      </Suspense>
     </>
   );
 }

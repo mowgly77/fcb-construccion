@@ -3,6 +3,7 @@ import { SITE_URL } from '../data/services.js';
 
 export default function SEO({ title, description, canonical, ogImage = '/img/obra-fachada.webp', schema }) {
   const url = canonical ? `${SITE_URL}${canonical}` : SITE_URL;
+  const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
 
   return (
     <Helmet>
@@ -15,9 +16,9 @@ export default function SEO({ title, description, canonical, ogImage = '/img/obr
       <meta property="og:image" content={`${SITE_URL}${ogImage}`} />
       <meta property="og:locale" content="es_MX" />
       <meta property="og:url" content={url} />
-      {schema && (
-        <script type="application/ld+json">{JSON.stringify(schema)}</script>
-      )}
+      {schemas.map((s, i) => (
+        <script key={i} type="application/ld+json">{JSON.stringify(s)}</script>
+      ))}
     </Helmet>
   );
 }
